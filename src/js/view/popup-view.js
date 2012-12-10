@@ -21,7 +21,7 @@ var PopupView = Backbone.View.extend({
         this.collection.websites.each(function (website) {
             this.websiteSelect.append('<option value="' + website.id + '" >' + website.get('title') + '</option>');
         }, this);
-
+        this.websiteSelect.val(localStorage.getItem('popupWebsite'));
         this.changeWebsite();
     },
 
@@ -34,6 +34,8 @@ var PopupView = Backbone.View.extend({
         this.collection.chain().filter(function (a) {
             return a.get('websiteId') === this.websiteSelect.val();
         }, this).each(this.renderItem);
+
+        localStorage.setItem('popupWebsite', this.websiteSelect.val());
     },
 
     clearList : function () {

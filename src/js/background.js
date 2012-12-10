@@ -9,15 +9,26 @@
             usernameSelector : '[name="username"]',
             passwordSelector : '[name="password"]',
             cookieKey : '_abiz_session',
-            cookieHost : 'http://www.abiz.com'
+            cookieHost : 'http://www.abiz.com',
+            closeTabUrl : 'http://*.abiz.com/*'
         });
         websites.create({
-            title : '中文版',
+            title : 'MIC 中文版',
             loginUrl : 'http://membercenter.cn.made-in-china.com/login/',
             usernameSelector : '#micForm [name="logonUserName"]',
             passwordSelector : '#micForm [name="logonPassword"]',
             cookieKey : 'cid',
-            cookieHost : 'http://membercenter.cn.made-in-china.com'
+            cookieHost : 'http://membercenter.cn.made-in-china.com',
+            closeTabUrl : 'http://*.cn.made-in-china.com/*'
+        });
+        websites.create({
+            title : 'MIC 国际站',
+            loginUrl : 'https://login.made-in-china.com/sign-in/',
+            usernameSelector : '[name="logonInfo.logUserName"]',
+            passwordSelector : '[name="logonInfo.logPassword"]',
+            cookieKey : 'cid',
+            cookieHost : 'http://www.made-in-china.com',
+            closeTabUrl : 'http://*.made-in-china.com/*'
         });
         localStorage.setItem('migrate', '1');
     }
@@ -28,31 +39,28 @@ function login(options) {
     var account = options.account;
 
     logout(website);
+    closeTab(website);
     createTab(website.get('loginUrl'), function (tab) {
-        //sendLogin(tab, account, website);
+        sendLogin(tab, account, website);
     });
 }
 
 // 退出登录
 function logout(website) {
-    var a = document.createElement('a');
-    a.href = website.get('loginUrl');
-    var host = a.protocol + '//' + a.hostname;
-
     chrome.cookies.remove({
         url : website.get('cookieHost'),
         name : website.get('cookieKey')
-    }, function (c) {
-        console.log(c);
     });
+}
 
+function closeTab(website) {
     chrome.tabs.query({
-        url : website.get('cookieHost') + '/*'
+        url : website.get('closeTabUrl')
     }, function (tabs) {
         chrome.tabs.remove(tabs.map(function (tab) {
             return tab.id;
         }));
-    })
+    });
 }
 
 // 创建 TAB
