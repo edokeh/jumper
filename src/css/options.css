@@ -1,0 +1,100 @@
+body {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.container-jumper {
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.container-jumper header {
+    margin-bottom: 20px;
+}
+
+.container-jumper > header >h1 {
+    color: black;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.container-jumper > header > em {
+    color: #999;
+    display: inline-block;
+}
+
+.website-title-input {
+    width: 100px;
+    margin-right: 8px;
+}
+
+.website-url-input {
+    width: 320px;
+    margin-right: 13px;
+}
+
+.website-cookie-input {
+    width: 170px;
+    margin-right: 16px;
+}
+
+.account-input {
+    width: 290px;
+    margin-right: 22px;
+}
+
+#website h5 {
+    margin-top: 0;
+    padding-left: 3px;
+}
+
+#websiteList td {
+    line-height: 26px;
+}
+
+#websiteList tr .delete {
+    display: none;
+}
+
+#websiteList tr:hover .delete {
+    display: block;
+}
+
+#websiteList td {
+    cursor: pointer;
+}
+
+#websiteList td:nth-child(even) {
+    border-left: none;
+}
+
+#websiteList tr.active td {
+    background-color: #f5f5f5;
+}
+
+#websiteForm legend {
+    font-size: 14px;
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+#websiteForm legend + .control-group {
+    margin-top: 10px;
+}
+
+#websiteForm .control-group {
+    margin-bottom: 10px;
+}
+
+#websiteForm .form-actions {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#successTip {
+    position: fixed;
+    top: -40px;
+    width: 150px;
+    text-align: center;
+    padding: 8px 0;
+}

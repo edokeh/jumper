@@ -1,0 +1,28 @@
+chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
+
+    $(function () {
+        var usernameField = $(request.usernameSelector);
+        var passwordField = $(request.passwordSelector);
+
+        usernameField.val(request.username);
+        passwordField.val(request.password);
+
+        usernameField.closest('form').submit();
+
+        var div = $('<div>登录中，马上就好...</div>').css({
+            height : '50px',
+            width : '150px',
+            position : 'absolute',
+            background : 'black',
+            color : 'white',
+            opacity : 0.7,
+            top : usernameField.offset().top + usernameField.height(),
+            left : usernameField.offset().left,
+            zIndex : 99999,
+            borderRadius : '5px',
+            textAlign : 'center',
+            lineHeight : '50px'
+        }).appendTo('body');
+    })
+
+});
