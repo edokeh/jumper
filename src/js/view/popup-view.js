@@ -39,7 +39,7 @@ var PopupView = Backbone.View.extend({
     },
 
     clearList : function () {
-        _(this.childViews).invoke('remove');
+        _(this.childViews).invoke('detach');
         this.$('#accountEmptyRow').show();
     },
 
@@ -55,7 +55,7 @@ var PopupView = Backbone.View.extend({
             });
             this.childViews.push(view);
         }
-        this.$('#accountList').prepend(view.$el);
+        this.$('#accountEmptyRow').before(view.$el);
     }
 
 });
@@ -80,5 +80,10 @@ var PopupAccountItemView = Backbone.View.extend({
 
     login : function () {
         this.model.trigger('login', this.model);
+    },
+
+    detach : function () {
+        this.$el.detach();
+        return this;
     }
 });
