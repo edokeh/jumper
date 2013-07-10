@@ -63,7 +63,9 @@ function login(options) {
     logout(website, function () {
         closeTab(website, function () {
             createTab(website.get('loginUrl'), function (tab) {
-                sendLogin(tab, account, website);
+                injectScript(tab, ['js/libs/jquery-1.8.3.min.js', 'js/content-script.js'], function(){
+                    sendLogin(tab, account, website);
+                });
             });
         });
     });
@@ -78,11 +80,11 @@ function logout(website, callback) {
         });
         callback();
     } else if (website.get('logoutWay') === 'requestURL') {
-        createTab(website.get('logoutUrl'), function (tab) {
-            setTimeout(function () {
+        createTab(website.get('logoutUrl'), function(tab){
+            setTimeout(function(){
                 chrome.tabs.remove(tab.id);
-                setTimeout(callback, 200);
-            }, 800);
+                setTimeout(callback, 500);
+            }, 500);
         });
     }
 }
@@ -102,9 +104,7 @@ function closeTab(website, callback) {
 function createTab(url, callback) {
     chrome.tabs.create({
         url : url
-    }, function (tab) {
-        injectScript(tab, ['js/libs/jquery-1.8.3.min.js', 'js/content-script.js'], callback);
-    });
+    }, callback);
 }
 
 // 向页面插入脚本
