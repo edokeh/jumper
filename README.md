@@ -9,8 +9,11 @@ Jumper
 
 ## 安装
 
-在 Chrome 中打开 chrome://extensions/
-下载 jumper-0.2.crx ，然后将文件拖入这个目录
+因为 Chrome 的安全策略限制所以没法直接安装
+
+右键另存为 [jumper-0.2.crx](https://github.com/edokeh/jumper/blob/master/jumper-0.2.crx?raw=true) ，在 Chrome 中打开 chrome://extensions/，然后将下载的文件拖入这个页面
+
+PS：嫌 Github 下载太慢的可以从我 Blog 下载 [jumper-0.2.zip](http://chaoskeh.com/uploads/attach/0051111292cc2679fce2488d5775d899.zip) 后解压
 
 ## History
 
