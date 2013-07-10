@@ -79,8 +79,10 @@ function logout(website, callback) {
         callback();
     } else if (website.get('logoutWay') === 'requestURL') {
         createTab(website.get('logoutUrl'), function (tab) {
-            chrome.tabs.remove(tab.id);
-            setTimeout(callback, 1000);
+            setTimeout(function () {
+                chrome.tabs.remove(tab.id);
+                setTimeout(callback, 200);
+            }, 800);
         });
     }
 }
@@ -89,11 +91,10 @@ function closeTab(website, callback) {
     chrome.tabs.query({
         url : website.get('closeTabUrl')
     }, function (tabs) {
-        console.log(tabs.length);
         chrome.tabs.remove(tabs.map(function (tab) {
             return tab.id;
         }));
-        setTimeout(callback, 1000);
+        setTimeout(callback, 500);
     });
 }
 

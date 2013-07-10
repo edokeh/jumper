@@ -6,7 +6,7 @@
     <link href="css/bootstrap.css" rel="stylesheet"/>
     <style>
         body {
-            min-width: 200px;
+            min-width: 250px;
             overflow-x: hidden;
             overflow-y: auto;
             margin: 10px;
@@ -30,6 +30,10 @@
 
         #accountList td:nth-child(even) {
             border-left: none;
+        }
+
+        strong {
+            word-break: break-all;
         }
     </style>
 
@@ -58,7 +62,7 @@
 
 
 <script type="text/tpl" id="accountTemp">
-    <tr>
+    <tr style="cursor:pointer">
         <td>
             <strong><%= username %></strong>
         </td>

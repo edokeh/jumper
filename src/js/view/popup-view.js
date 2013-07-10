@@ -65,7 +65,7 @@ var PopupAccountItemView = Backbone.View.extend({
     el : null,
 
     events : {
-        'click button' : 'login'
+        'click' : 'login'
     },
 
     initialize : function () {
