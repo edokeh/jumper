@@ -10,9 +10,10 @@ var AccountView = Backbone.View.extend({
         'submit #accountModifyForm' : 'modifyAccount'
     },
 
-    initialize : function () {
+    initialize : function (options) {
         _.bindAll(this);
 
+        this.router = options.router;
         this.childViews = {};
         this.tmpModifyView = null; // 修改时，原有的view临时保存
         this.modifyForm = this.$('#accountModifyForm');  // 修改的表单
@@ -20,7 +21,7 @@ var AccountView = Backbone.View.extend({
 
         this.collection.on('add', this.renderItem);
         this.collection.on('startModify', this.renderModifyForm);
-        this.collection.websites.on('select', this.changeWebsite);
+        this.collection.websites.on('selectChange', this.changeWebsite);
         this.collection.websites.on('clear', this.clearWebsite);
         this.render();
     },
@@ -29,6 +30,11 @@ var AccountView = Backbone.View.extend({
         this.websiteSelectView = new WebsiteSelectView({
             collection : this.collection.websites
         });
+    },
+
+    renderForWebsite : function (websiteId) {
+        this.websiteSelectView.$el.val(websiteId);
+        this.websiteSelectView.selectWebsite();
     },
 
     // 切换网站
@@ -41,6 +47,8 @@ var AccountView = Backbone.View.extend({
 
         this.addForm.find('[name="websiteId"]').val(website.id);
         this.addForm.find('input,button').prop('disabled', false);
+
+        this.router.navigate('account/' + website.id);
     },
 
     clearWebsite : function () {
@@ -140,7 +148,7 @@ var WebsiteSelectView = Backbone.View.extend({
     selectWebsite : function () {
         var website = this.collection.get(this.$el.val());
         if (website) {
-            this.collection.trigger('select', website);
+            this.collection.trigger('selectChange', website);
         } else {
             this.collection.trigger('clear');
         }

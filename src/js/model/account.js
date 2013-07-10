@@ -16,7 +16,7 @@ var Account = Backbone.Model.extend({
 
 var AccountList = Backbone.Collection.extend({
     model : Account,
-    localStorage : new Store('account'),
+    localStorage : new Backbone.LocalStorage('account'),
 
     initialize : function (options) {
         _.bindAll(this);

@@ -1,4 +1,26 @@
 $(function () {
+    var OptionRouter = Backbone.Router.extend({
+        routes : {
+            '' : 'redirect',
+            'account' : 'accounts',
+            'account/:website' : 'accounts',
+            'website' : 'websites'
+        },
+
+        redirect : function () {
+            this.navigate('account', {trigger: true});
+        },
+
+        accounts : function (website) {
+            $('a[href="#account"]').tab('show');
+            accountListView.renderForWebsite(website);
+        },
+
+        websites : function () {
+            $('a[href="#website"]').tab('show');
+        }
+    });
+    var optionRouter = new OptionRouter();
 
     var websiteList = new WebsiteList();
     var accountList = new AccountList({
@@ -11,12 +33,9 @@ $(function () {
         collection : websiteList
     });
     var accountListView = new AccountView({
-        collection : accountList
+        collection : accountList,
+        router : optionRouter
     });
 
-    $('#tab a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-
+    Backbone.history.start();
 });

@@ -9,7 +9,14 @@
     },
     "options_page" : "options.html",
     "background" : {
-        "scripts" : ["js/libs/underscore-min.js", "js/libs/backbone-min.js", "js/libs/backbone-localstorage.js", "js/model/website.js", "js/background.js"],
+        "scripts" : [
+            "js/libs/underscore-min.js",
+            "js/libs/jquery-1.8.3.min.js",
+            "js/libs/backbone-min.js",
+            "js/libs/backbone-localstorage.js",
+            "js/model/website.js",
+            "js/background.js"
+        ],
         "persistent" : true
     },
     "permissions" : [

@@ -111,7 +111,8 @@ var WebsiteFormView = Backbone.View.extend({
     el : '#websiteForm',
 
     events : {
-        'submit' : 'handleSubmit'
+        'submit' : 'handleSubmit',
+        'change [name="logoutWay"]' : 'changeWay'
     },
 
     initialize : function () {
@@ -126,21 +127,29 @@ var WebsiteFormView = Backbone.View.extend({
         }, this);
         this.model = website;
 
-        this.$el.find('input,button').prop('disabled', false);
-        this.$el.find('input:first').focus();
+        this.$('input,button').prop('disabled', false);
+        this.$('input:first').focus();
+        this.changeWay();
     },
 
     // 清除当前表单所对应的 model
     clearModel : function () {
         this.el.reset();
-        this.$el.find('input,button').prop('disabled', true);
+        this.$('input,button').prop('disabled', true);
     },
 
     handleSubmit : function () {
         var attrs = this.$el.serializeObject();
-        this.model.set(attrs).save();
+        this.model.set(attrs)
+            this.model.save();
         successTip.show('保存成功');
 
         return false;
+    },
+
+    changeWay : function () {
+        var way = this.$('[name="logoutWay"]').val();
+        this.$('[data-way]').hide().find('input').prop('disabled', true);
+        this.$('[data-way="' + way + '"]').show().find('input').prop('disabled', false);
     }
 });

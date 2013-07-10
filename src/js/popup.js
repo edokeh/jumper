@@ -20,7 +20,7 @@ $(function () {
 
     $('#options').click(function () {
         chrome.tabs.create({
-            url : 'options.html'
+            url : 'options.html#account/' + localStorage.getItem('popupWebsite')
         });
     });
 });

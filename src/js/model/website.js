@@ -1,4 +1,8 @@
 var Website = Backbone.Model.extend({
+    defaults : {
+        logoutWay : 'clearCookie'
+    },
+
     select : function () {
         this.trigger('select', this);
     }
@@ -6,5 +10,5 @@ var Website = Backbone.Model.extend({
 
 var WebsiteList = Backbone.Collection.extend({
     model : Website,
-    localStorage : new Store('website')
+    localStorage : new Backbone.LocalStorage('website')
 });

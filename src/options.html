@@ -106,7 +106,7 @@
                         <fieldset>
                             <legend>登录设置</legend>
                             <div class="control-group">
-                                <label class="control-label">登录页面 URL</label>
+                                <label class="control-label">* 登录页面 URL</label>
 
                                 <div class="controls">
                                     <input type="url" name="loginUrl" class="input-xlarge" required
@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">用户名 Selector</label>
+                                <label class="control-label">* 用户名 Selector</label>
 
                                 <div class="controls">
                                     <input type="text" name="usernameSelector" class="input-xlarge"
@@ -122,11 +122,19 @@
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">密码 Selector</label>
+                                <label class="control-label">* 密码 Selector</label>
 
                                 <div class="controls">
                                     <input type="text" name="passwordSelector" class="input-xlarge"
                                            required disabled/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">登录按钮 Selector</label>
+
+                                <div class="controls">
+                                    <input type="text" name="submitSelector" class="input-xlarge"
+                                           disabled/>
                                 </div>
                             </div>
                         </fieldset>
@@ -134,27 +142,49 @@
                         <fieldset>
                             <legend>退出设置</legend>
                             <div class="control-group">
-                                <label class="control-label">Cookie Key</label>
-
-                                <div class="controls">
-                                    <input type="text" name="cookieKey" class="input-xlarge"
-                                           required disabled/>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">Cookie Host</label>
-
-                                <div class="controls">
-                                    <input type="text" name="cookieHost" class="input-xlarge"
-                                           required disabled/>
-                                </div>
-                            </div>
-                            <div class="control-group">
                                 <label class="control-label">需关闭的 Tab</label>
 
                                 <div class="controls">
                                     <input type="text" name="closeTabUrl" class="input-xlarge"
                                            disabled/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">* 退出方式</label>
+
+                                <div class="controls">
+                                    <select name="logoutWay" class="input-large">
+                                        <option value="clearCookie">清除 Cookie</option>
+                                        <option value="requestURL">请求 URL</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div data-way="clearCookie">
+                                <div class="control-group">
+                                    <label class="control-label">* Cookie Key</label>
+
+                                    <div class="controls">
+                                        <input type="text" name="cookieKey" class="input-xlarge"
+                                               required disabled/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">* Cookie Host</label>
+
+                                    <div class="controls">
+                                        <input type="text" name="cookieHost" class="input-xlarge"
+                                               required disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-way="requestURL" style="display:none">
+                                <div class="control-group">
+                                    <label class="control-label">* URL</label>
+
+                                    <div class="controls">
+                                        <input type="text" name="logoutUrl" class="input-xlarge"
+                                                disabled/>
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>
