@@ -20,7 +20,6 @@ $(function () {
 
         this.main.show(popView);
 
-
         popView.on('login', function (account) {
             var website = this.websiteList.get(account.get('websiteId'));
 

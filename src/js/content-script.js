@@ -11,6 +11,12 @@ chrome.extension.onMessage.addListener(function (request, sender, sendResponse) 
         usernameField.val(request.username);
         passwordField.val(request.password);
 
+        if (request.submitSelector) {
+            $(request.submitSelector)[0].click();
+        } else {
+            usernameField.closest('form').submit();
+        }
+
         var div = $('<div>登录中，马上就好...</div>').css({
             height : '50px',
             width : '150px',
@@ -25,12 +31,6 @@ chrome.extension.onMessage.addListener(function (request, sender, sendResponse) 
             textAlign : 'center',
             lineHeight : '50px'
         }).appendTo('body');
-
-        if (request.submitSelector) {
-            $(request.submitSelector)[0].click();
-        } else {
-            usernameField.closest('form').submit();
-        }
     })();
 
 });

@@ -228,7 +228,7 @@ var AccountModule = function (module, app) {
             },
 
             accounts: function (websiteId) {
-                accountLayout.handleWebsiteChange(websiteId);
+                accountLayout.websiteSelectView.$el.val(websiteId).trigger('change');
                 $('a[href="#account"]').tab('show');
             }
         });
