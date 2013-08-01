@@ -24,177 +24,8 @@
 
     <div class="tab-content">
         <div class="tab-pane fade in active" id="account">
-            <div>
-                所属网站：
-                <select id="websiteSelect">
-                </select>
-            </div>
-
-            <table class="table table-striped table-bordered">
-                <colgroup>
-                    <col width="330px;"/>
-                    <col width="330px;"/>
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>用户名</th>
-                    <th>密码</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody id="accountTable">
-                <tr id="accountEmptyRow" class="warning">
-                    <td colspan="3">
-                        暂无帐号
-                    </td>
-                </tr>
-                </tbody>
-
-                <tfoot>
-                <td colspan="3" style="display: none" id="accountModifyForm">
-                    <form class="form-inline" style="margin:0">
-                        <input type="text" name="username" class="account-input" placeholder="用户名" required/>
-                        <input type="password" name="password" class="account-input" placeholder="密码" required/>
-                        <input type="hidden" name="websiteId">
-                        <button type="submit" class="btn btn-small btn-primary submit-modify">提交</button>
-                        <button type="button" class="btn btn-small cancel-modify">取消</button>
-                    </form>
-                </td>
-                </tfoot>
-            </table>
-            <div class="well">
-                <form class="form-inline" style="margin:0" id="accountAddForm">
-                    <input type="hidden" name="websiteId"/>
-                    <input type="text" name="username" class="input-large" placeholder="用户名" required disabled/>
-                    <input type="password" name="password" class="input-large" placeholder="密码" required disabled/>
-                    <button type="submit" class="btn btn-primary" disabled>
-                        <i class="icon-plus icon-white"></i>
-                        添加帐号
-                    </button>
-                </form>
-            </div>
-
         </div>
         <div class="tab-pane fade" id="website">
-            <div class="row-fluid">
-                <div class="span4">
-                    <h5>网站列表</h5>
-                    <table class="table table-hover table-bordered" id="websiteList">
-                        <colgroup>
-                            <col/>
-                            <col width="70px"/>
-                        </colgroup>
-                    </table>
-                    <button class="btn btn-primary" id="addWebsite">添加网站</button>
-                </div>
-                <div class="span8">
-                    <h5>详情</h5>
-
-                    <form class="form-horizontal well" id="websiteForm">
-                        <fieldset>
-                            <legend class="small">基本设置</legend>
-                            <div class="control-group">
-                                <label class="control-label" for="websiteTitle">网站名</label>
-
-                                <div class="controls">
-                                    <input type="text" id="websiteTitle" name="title" class="input-xlarge" required
-                                           disabled/>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>登录设置</legend>
-                            <div class="control-group">
-                                <label class="control-label">* 登录页面 URL</label>
-
-                                <div class="controls">
-                                    <input type="url" name="loginUrl" class="input-xlarge" required
-                                           disabled/>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">* 用户名 Selector</label>
-
-                                <div class="controls">
-                                    <input type="text" name="usernameSelector" class="input-xlarge"
-                                           required disabled/>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">* 密码 Selector</label>
-
-                                <div class="controls">
-                                    <input type="text" name="passwordSelector" class="input-xlarge"
-                                           required disabled/>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">登录按钮 Selector</label>
-
-                                <div class="controls">
-                                    <input type="text" name="submitSelector" class="input-xlarge"
-                                           disabled/>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>退出设置</legend>
-                            <div class="control-group">
-                                <label class="control-label">需关闭的 Tab</label>
-
-                                <div class="controls">
-                                    <input type="text" name="closeTabUrl" class="input-xlarge"
-                                           disabled/>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">* 退出方式</label>
-
-                                <div class="controls">
-                                    <select name="logoutWay" class="input-large">
-                                        <option value="clearCookie">清除 Cookie</option>
-                                        <option value="requestURL">请求 URL</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div data-way="clearCookie">
-                                <div class="control-group">
-                                    <label class="control-label">* Cookie Key</label>
-
-                                    <div class="controls">
-                                        <input type="text" name="cookieKey" class="input-xlarge"
-                                               required disabled/>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">* Cookie Host</label>
-
-                                    <div class="controls">
-                                        <input type="text" name="cookieHost" class="input-xlarge"
-                                               required disabled/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-way="requestURL" style="display:none">
-                                <div class="control-group">
-                                    <label class="control-label">* URL</label>
-
-                                    <div class="controls">
-                                        <input type="text" name="logoutUrl" class="input-xlarge"
-                                                disabled/>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary" disabled>保存</button>
-                            &nbsp;&nbsp;<a target="_blank" href="http://chaoskeh.com/blog/jumper-can-switch-account-rapidly.html"><small>帮助</small></a>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -213,11 +44,38 @@
 </div>
 
 <script id="accountTemp" type="text/tpl">
-    <td><%= get('username') %></td>
+    <div>
+        所属网站：
+        <span id="websiteSelect">
+        </span>
+    </div>
+
+    <div id="accountTable">
+    </div>
+
+    <div class="well">
+        <form id="accountAddForm" class="form-inline">
+            <input type="hidden" name="websiteId"/>
+            <input type="text" name="username" class="input-large" placeholder="用户名" required autofocus/>
+            <input type="password" name="password" class="input-large" placeholder="密码" required/>
+            <button type="submit" class="btn btn-primary">
+                <i class="icon-plus icon-white"></i>
+                添加帐号
+            </button>
+        </form>
+    </div>
+</script>
+
+<script id="websiteSelectTemp" type="text/tpl">
+    <% _.each(items, function(item){ %>
+    <option value="<%= item.id %>"><%- item.title %></option>
+    <% }); %>
+</script>
+
+<script id="accountItemTemp" type="text/tpl">
+    <td><%- username %></td>
     <td>
-        <% for(var i=0;i< get('password').length;i++){ %>
-        *
-        <% } %>
+        <%= protectedPass() %>
     </td>
     <td>
         <button type="submit" class="btn btn-small modify">修改</button>
@@ -225,25 +83,188 @@
     </td>
 </script>
 
+<script id="accountEmptyTemp" type="text/tpl">
+    <td colspan="3">
+        暂无帐号
+    </td>
+</script>
+
+<script id="accountListTemp" type="text/tpl">
+    <colgroup>
+        <col width="330px;"/>
+        <col width="330px;"/>
+    </colgroup>
+    <tr>
+        <th>用户名</th>
+        <th>密码</th>
+        <th></th>
+    </tr>
+</script>
+
+<script id="accountEditTemp" type="text/tpl">
+    <td colspan="3" id="accountModifyForm">
+        <form class="form-inline" style="margin:0">
+            <input type="text" name="username" value="<%= username %>" class="account-input" placeholder="用户名"
+                   required/>
+            <input type="password" name="password" value="<%= password %>" class="account-input" placeholder="密码"
+                   required/>
+            <input type="hidden" value="<%= websiteId %>" name="websiteId">
+            <button type="submit" class="btn btn-small btn-primary submit-modify">提交</button>
+            <button type="button" class="btn btn-small cancel-modify">取消</button>
+        </form>
+    </td>
+</script>
+
 <script id="websiteTemp" type="text/tpl">
+    <div class="span4">
+        <h5>网站列表</h5>
+
+        <div id="websiteTable">
+
+        </div>
+        <button class="btn btn-primary" id="addWebsite">添加网站</button>
+    </div>
+    <div class="span8">
+        <h5>详情</h5>
+
+        <div id="websiteForm">
+
+        </div>
+    </div>
+</script>
+
+<script id="websiteListTemp" type="text/tpl">
+    <colgroup>
+        <col/>
+        <col width="70px"/>
+    </colgroup>
+</script>
+
+<script id="websiteItemTemp" type="text/tpl">
     <td>
-        <a><%= title %></a>
+        <a><%- title %></a>
     </td>
     <td>
         <button class="btn btn-danger btn-small delete">删除</button>
     </td>
+</script>
+
+<script id="websiteFormTemp" type="text/tpl">
+    <fieldset>
+        <legend class="small">基本设置</legend>
+        <div class="control-group">
+            <label class="control-label">网站名</label>
+
+            <div class="controls">
+                <input type="text" value="<%= title %>" name="title" class="input-xlarge" required autofocus/>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>登录设置</legend>
+        <div class="control-group">
+            <label class="control-label">* 登录页面 URL</label>
+
+            <div class="controls">
+                <input type="url" value="<%- loginUrl %>" name="loginUrl" class="input-xlarge" required/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">* 用户名 Selector</label>
+
+            <div class="controls">
+                <input type="text" value="<%- usernameSelector %>" name="usernameSelector" class="input-xlarge"
+                       required/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">* 密码 Selector</label>
+
+            <div class="controls">
+                <input type="text" value="<%- passwordSelector %>" name="passwordSelector" class="input-xlarge"
+                       required/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">登录按钮 Selector</label>
+
+            <div class="controls">
+                <input type="text" value="<%- submitSelector %>" name="submitSelector" class="input-xlarge"/>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>退出设置</legend>
+        <div class="control-group">
+            <label class="control-label">需关闭的 Tab</label>
+
+            <div class="controls">
+                <input type="text" value="<%- closeTabUrl %>" name="closeTabUrl" class="input-xlarge"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">* 退出方式</label>
+
+            <div class="controls">
+                <select name="logoutWay" class="input-large">
+                    <option value="clearCookie"
+                    <%= logoutWay === 'clearCookie' ? 'selected' : '' %>>清除 Cookie</option>
+                    <option value="requestURL"
+                    <%= logoutWay === 'requestURL' ? 'selected' : '' %>>请求 URL</option>
+                </select>
+            </div>
+        </div>
+        <div data-way="clearCookie">
+            <div class="control-group">
+                <label class="control-label">* Cookie Key</label>
+
+                <div class="controls">
+                    <input type="text" value="<%- cookieKey %>" name="cookieKey" class="input-xlarge"
+                           required/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">* Cookie Host</label>
+
+                <div class="controls">
+                    <input type="text" value="<%- cookieHost %>" name="cookieHost" class="input-xlarge"
+                           required disabled/>
+                </div>
+            </div>
+        </div>
+        <div data-way="requestURL" style="display:none">
+            <div class="control-group">
+                <label class="control-label">* URL</label>
+
+                <div class="controls">
+                    <input type="text" value="<%- logoutUrl %>" name="logoutUrl" class="input-xlarge"
+                           disabled/>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">保存</button>
+        &nbsp;&nbsp;<a target="_blank"
+                       href="http://chaoskeh.com/blog/jumper-can-switch-account-rapidly.html">
+        <small>帮助</small>
+    </a>
+    </div>
 </script>
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/jquery-1.8.3.min.js"></script>
 <script src="js/libs/jquery-form-serialize.js"></script>
 <script src="js/libs/backbone-min.js"></script>
 <script src="js/libs/backbone-localstorage.js"></script>
+<script src="js/libs/backbone.marionette.js"></script>
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/model/account.js"></script>
 <script src="js/model/website.js"></script>
-<script src="js/view/success-tip.js"></script>
 <script src="js/view/account-view.js"></script>
 <script src="js/view/website-view.js"></script>
+<script src="js/view/success-tip.js"></script>
 <script src="js/options.js"></script>
 </body>
 </html>

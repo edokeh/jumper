@@ -1,14 +1,18 @@
 var Website = Backbone.Model.extend({
-    defaults : {
-        logoutWay : 'clearCookie'
-    },
-
-    select : function () {
-        this.trigger('select', this);
+    defaults: {
+        loginUrl: '',
+        usernameSelector: '',
+        passwordSelector: '',
+        submitSelector: '',
+        closeTabUrl: '',
+        logoutWay: 'clearCookie',
+        cookieKey: '',
+        cookieHost: '',
+        logoutUrl: ''
     }
 });
 
 var WebsiteList = Backbone.Collection.extend({
-    model : Website,
-    localStorage : new Backbone.LocalStorage('website')
+    model: Website,
+    localStorage: new Backbone.LocalStorage('website')
 });

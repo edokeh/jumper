@@ -1,6 +1,6 @@
 var successTip = {
     init : function () {
-        _.bindAll(this);
+        _.bindAll(this, 'show', 'hide');
         this.$el = $('#successTip');
     },
 

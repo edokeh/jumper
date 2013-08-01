@@ -1,155 +1,162 @@
 /**
  * 网站设置页面
  */
-var WebsiteView = Backbone.View.extend({
-    el : '#website',
+var WebsiteItemView = Backbone.Marionette.ItemView.extend({
+    template: '#websiteItemTemp',
+    tagName: 'tr',
 
-    events : {
-        'click #addWebsite' : 'addWebsite'
+    events: {
+        'click .delete': 'delete',
+        'click': 'handleSelect'
     },
 
-    initialize : function () {
-        _.bindAll(this);
-
-        this.childViews = [];
-        this.collection.on('add', this.renderItem);
-        this.collection.on('select', this.selectItem);
-        this.collection.on('destroy', this.selectFirst);
-        this.render();
+    modelEvents: {
+        'change': 'render'
     },
 
-    render : function () {
-        this.collection.each(this.renderItem);
-        this.form = new WebsiteFormView();
-        this.selectFirst();
+    delete: function (e) {
+        e.stopImmediatePropagation();
+        if (this.model.isNew() || confirm('确定删除“' + this.model.get('title') + '”？')) {
+            this.model.destroy();
+        }
     },
 
-    // 渲染每个网站
-    renderItem : function (website) {
-        var view = new WebsiteItemView({
-            model : website
-        });
-        this.$('#websiteList').show().append(view.$el);
-        this.childViews.push(view);
+    handleSelect: function () {
+        this.trigger('selectWebsite');
     },
 
-    // 选中某个网站
-    selectItem : function (website) {
-        _(this.childViews).each(function (v) {
-            v.$el.removeClass('info');
-        });
-        var view = _(this.childViews).find(function (view) {
-            return view.model === website;
-        });
-        view.$el.addClass('info');
-        this.form.setModel(website);
+    highlight: function (boolean) {
+        this.$el.toggleClass('info', boolean);
+    }
+});
+
+var WebsiteListView = Backbone.Marionette.CompositeView.extend({
+    tagName: 'table',
+    className: 'table table-hover table-bordered',
+    template: '#websiteListTemp',
+    itemView: WebsiteItemView,
+
+    collectionEvents: {
+        'destroy': 'selectFirst'
+    },
+
+    initialize: function () {
+        this.on('itemview:selectWebsite', this.selectWebsite);
+    },
+
+    selectWebsite: function (childView) {
+        this.children.invoke('highlight', false);
+        childView.highlight(true);
+        this.trigger('selectWebsite', childView.model);
     },
 
     // 选中第一个网站
-    selectFirst : function () {
-        if (this.collection.length > 0) {
-            this.collection.first().select();
+    selectFirst: function () {
+        if (this.collection.length === 0) {
+            this.trigger('emptyWebsite');
         } else {
-            // 如果没有网站
-            this.form.clearModel();
-            this.$('#websiteList').hide();
+            this.selectWebsite(this.children.first());
         }
     },
 
-    // 新建网站
-    addWebsite : function () {
-        var website = new Website({
-            title : '新的网站'
+    addWebsite: function () {
+        this.collection.add({
+            title: '新的网站'
         });
-        this.collection.add(website);
-        website.select();
-        return false;
+        this.selectWebsite(this.children.last());
     }
 });
 
-var WebsiteItemView = Backbone.View.extend({
-    template : _.template($('#websiteTemp').html()),
-    tagName : 'tr',
+var WebsiteFormView = Backbone.Marionette.ItemView.extend({
+    template: '#websiteFormTemp',
+    tagName: 'form',
+    className: 'form-horizontal well',
 
-    events : {
-        'click .delete' : 'delete',
-        'click' : 'handleSelect'
+    events: {
+        'submit': 'handleSubmit',
+        'change [name="logoutWay"]': 'changeWay'
     },
 
-    initialize : function () {
-        _.bindAll(this);
-
-        this.model.on('change', this.render);
-        this.model.on('destroy', this.remove);
-        this.render();
-    },
-
-    render : function () {
-        this.$el.html($(this.template(this.model.toJSON())));
-    },
-
-    delete : function (e) {
-        e.stopImmediatePropagation();
-        if (this.model.isNew()) {
-            this.model.destroy();
-        } else {
-            if (confirm('确定删除“' + this.model.get('title') + '”？')) {
-                this.model.destroy();
-            }
-        }
-    },
-
-    handleSelect : function () {
-        this.model.select();
-    }
-});
-
-/**
- * 表单
- */
-var WebsiteFormView = Backbone.View.extend({
-    el : '#websiteForm',
-
-    events : {
-        'submit' : 'handleSubmit',
-        'change [name="logoutWay"]' : 'changeWay'
-    },
-
-    initialize : function () {
-        _.bindAll(this);
-    },
-
-    setModel : function (website) {
-        this.el.reset();
-        // 填充表单值
-        _(website.attributes).each(function (value, key) {
-            this.$('[name="' + key + '"]').val(value);
-        }, this);
-        this.model = website;
-
-        this.$('input,button').prop('disabled', false);
-        this.$('input:first').focus();
+    onRender: function () {
         this.changeWay();
     },
 
-    // 清除当前表单所对应的 model
-    clearModel : function () {
-        this.el.reset();
-        this.$('input,button').prop('disabled', true);
-    },
-
-    handleSubmit : function () {
-        var attrs = this.$el.serializeObject();
-        this.model.set(attrs)
-            this.model.save();
-        successTip.show('保存成功');
-
-        return false;
-    },
-
-    changeWay : function () {
+    changeWay: function () {
         var way = this.$('[name="logoutWay"]').val();
         this.$('[data-way]').hide().find('input').prop('disabled', true);
         this.$('[data-way="' + way + '"]').show().find('input').prop('disabled', false);
+    },
+
+    handleSubmit: function (e) {
+        e.preventDefault();
+
+        var attrs = this.$el.serializeObject();
+        this.model.save(attrs);
+        successTip.show('保存成功');
     }
 });
+
+var WebsiteLayout = Backbone.Marionette.Layout.extend({
+    template: '#websiteTemp',
+    className: 'row-fluid',
+
+    regions: {
+        list: "#websiteTable",
+        form: '#websiteForm'
+    },
+
+    events: {
+        'click #addWebsite': 'addWebsite'
+    },
+
+    ui: {
+        'addForm': '#accountAddForm'
+    },
+
+    initialize: function (options) {
+        this.listView = new WebsiteListView(options);
+
+        this.listenTo(this.listView, 'selectWebsite', this.showForm);
+        this.listenTo(this.listView, 'emptyWebsite', this.hideForm);
+    },
+
+    onRender: function () {
+        this.list.show(this.listView);
+        this.listView.selectFirst();
+    },
+
+    // 新建网站
+    addWebsite: function () {
+        this.listView.addWebsite();
+    },
+
+    // 选中某个网站时显示表单
+    showForm: function (website) {
+        this.form.show(new WebsiteFormView({model: website}));
+    },
+
+    hideForm: function () {
+        this.form.close();
+    }
+});
+
+var WebsiteModule = function (module, app) {
+
+    this.addInitializer(function () {
+        var websiteLayout = new WebsiteLayout({
+            collection: app.websiteList
+        });
+        app.websites.show(websiteLayout);
+
+        var Router = Backbone.Router.extend({
+            routes: {
+                'website': 'websites'
+            },
+
+            websites: function () {
+                $('a[href="#website"]').tab('show');
+            }
+        });
+        new Router();
+    });
+};

@@ -1,26 +1,42 @@
 $(function () {
-    var websiteList = new WebsiteList();
-    var accountList = new AccountList({
-        websites : websiteList
-    });
-    websiteList.fetch();
-    accountList.fetch();
+    var PopApp = new Backbone.Marionette.Application();
 
-    var popView = new PopupView({
-        collection : accountList
+    PopApp.addRegions({
+        'main': '#main'
+    })
+
+    PopApp.addInitializer(function () {
+        this.websiteList = new WebsiteList();
+        this.accountList = new AccountList();
+        this.websiteList.fetch();
+        this.accountList.fetch();
     });
 
-    accountList.on('login', function (account) {
-        var bgPage = chrome.extension.getBackgroundPage();
-        bgPage.login({
-            account : account,
-            website : account.getWebsite()
+    PopApp.addInitializer(function () {
+        var popView = new PopupView({
+            websites: this.websiteList,
+            accounts: this.accountList
         });
+
+        this.main.show(popView);
+
+
+        popView.on('login', function (account) {
+            var website = this.websiteList.get(account.get('websiteId'));
+
+            var bgPage = chrome.extension.getBackgroundPage();
+            bgPage.login({
+                account: account,
+                website: website
+            });
+        }, this);
     });
+
+    PopApp.start();
 
     $('#options').click(function () {
         chrome.tabs.create({
-            url : 'options.html#account/' + localStorage.getItem('popupWebsite')
+            url: 'options.html#account/' + localStorage.getItem('popupWebsite')
         });
     });
 });

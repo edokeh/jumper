@@ -20,8 +20,12 @@
             background: none;
         }
 
-        #accountList {
+        #accountList table{
             margin:0;
+        }
+
+        #accountList tr{
+            cursor: pointer;
         }
 
         #accountList tr:first-of-type td{
@@ -39,43 +43,56 @@
 
 </head>
 <body>
-<div>
+
+<div id="main">
+
+</div>
+
+<script type="text/tpl" id="popupTemp">
+    <div id="websiteSelect">
+    </div>
+
+    <div class="well table-wrap" id="accountList">
+    </div>
+    <div style="padding-left:10px;">
+        <a href="#" id="options">管理账号</a>
+        <small class="pull-right"><em>by <a href="http://chaoskeh.com" target="_blank">Chaos</a></em></small>
+    </div>
+</script>
+
+<script type="text/tpl" id="websiteSelectTemp">
     <select id="websiteSelect" class="input-medium">
+        <% _.each(items, function(item){ %>
+        <option value="<%= item.id %>"><%- item.title %></option>
+        <% }); %>
     </select>
-</div>
-
-<div class="well table-wrap">
-    <table class="table table-hover table-condensed" id="accountList">
-        <colgroup>
-            <col />
-            <col width="60px"/>
-        </colgroup>
-        <tr class="warning" id="accountEmptyRow">
-            <td colspan="2">暂无帐号</td>
-        </tr>
-    </table>
-</div>
-<div style="padding-left:10px;">
-    <a href="#" id="options">管理账号</a>
-    <small class="pull-right"><em>by <a href="http://chaoskeh.com" target="_blank">Chaos</a></em></small>
-</div>
-
+</script>
 
 <script type="text/tpl" id="accountTemp">
-    <tr style="cursor:pointer">
-        <td>
-            <strong><%= username %></strong>
-        </td>
-        <td>
-            <button class="btn btn-small btn-info login">登录</button>
-        </td>
-    </tr>
+    <td>
+        <strong><%= username %></strong>
+    </td>
+    <td>
+        <button class="btn btn-small btn-info login">登录</button>
+    </td>
+</script>
+
+<script type="text/tpl" id="accountEmptyTemp">
+    <td colspan="2">暂无帐号</td>
+</script>
+
+<script type="text/tpl" id="accountListTemp">
+    <colgroup>
+        <col />
+        <col width="60px"/>
+    </colgroup>
 </script>
 
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/jquery-1.8.3.min.js"></script>
 <script src="js/libs/backbone-min.js"></script>
 <script src="js/libs/backbone-localstorage.js"></script>
+<script src="js/libs/backbone.marionette.js"></script>
 <script src="js/model/account.js"></script>
 <script src="js/model/website.js"></script>
 <script src="js/view/popup-view.js"></script>

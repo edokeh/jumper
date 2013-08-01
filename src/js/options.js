@@ -1,41 +1,29 @@
 $(function () {
-    var OptionRouter = Backbone.Router.extend({
-        routes : {
-            '' : 'redirect',
-            'account' : 'accounts',
-            'account/:website' : 'accounts',
-            'website' : 'websites'
-        },
-
-        redirect : function () {
-            this.navigate('account', {trigger: true});
-        },
-
-        accounts : function (website) {
-            $('a[href="#account"]').tab('show');
-            accountListView.renderForWebsite(website);
-        },
-
-        websites : function () {
-            $('a[href="#website"]').tab('show');
-        }
-    });
-    var optionRouter = new OptionRouter();
-
-    var websiteList = new WebsiteList();
-    var accountList = new AccountList({
-        websites : websiteList
-    });
-    websiteList.fetch();
-    accountList.fetch();
-
-    var websiteView = new WebsiteView({
-        collection : websiteList
-    });
-    var accountListView = new AccountView({
-        collection : accountList,
-        router : optionRouter
+    var OptionApp = new Backbone.Marionette.Application();
+    OptionApp.addRegions({
+        'accounts': '#account',
+        'websites': '#website'
     });
 
-    Backbone.history.start();
+    OptionApp.addInitializer(function (options) {
+        this.accountList = new AccountList();
+        this.websiteList = new WebsiteList();
+        this.websiteList.on('remove', function (website) {
+            this.accountList.chain().filter(function (account) {
+                return account.get('websiteId') === website.id
+            }).invoke('destroy');
+        }, this);
+
+        this.accountList.fetch();
+        this.websiteList.fetch();
+    });
+
+    OptionApp.module('AccountModule', AccountModule);
+    OptionApp.module('WebsiteModule', WebsiteModule);
+
+    OptionApp.addInitializer(function (options) {
+        Backbone.history.start();
+    });
+
+    OptionApp.start();
 });

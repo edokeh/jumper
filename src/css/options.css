@@ -48,27 +48,27 @@ body {
     padding-left: 3px;
 }
 
-#websiteList td {
+#websiteTable td {
     line-height: 26px;
 }
 
-#websiteList tr .delete {
+#websiteTable tr .delete {
     display: none;
 }
 
-#websiteList tr:hover .delete {
+#websiteTable tr:hover .delete {
     display: block;
 }
 
-#websiteList td {
+#websiteTable td {
     cursor: pointer;
 }
 
-#websiteList td:nth-child(even) {
+#websiteTable td:nth-child(even) {
     border-left: none;
 }
 
-#websiteList tr.active td {
+#websiteTable tr.active td {
     background-color: #f5f5f5;
 }
 
